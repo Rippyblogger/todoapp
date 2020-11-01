@@ -1,5 +1,6 @@
 <template>
     <div>
+      <h3>Number of uncompleted tasks: {{totalTasks}}</h3>
       <input type="text" v-model="task" v-on:keyup.enter="addTask" placeholder="Enter task here and press enter">
       <div>
         <div :class="{taskdiv:active}" v-for="(toDo, index) in toDoArray" :key="toDo.array">
@@ -24,7 +25,8 @@ export default {
         { "id": 2, "task": "Boil some water", "status": "incomplete"},
         { "id": 3, "task": "Make coffee", "status": "incomplete" }
       ],
-      active: true
+      active: true,
+      totalTasks: 3
     }
   },
   props: {
@@ -37,12 +39,17 @@ export default {
       this.id++;
     },
 
-
     removeTask(index){
       this.toDoArray.splice(index, 1)
-    }
+  
+  },
+    taskNumber(){ 
+      this.totalTasks = this.toDoArray.length; 
+      }
+  },
+  updated(){ this.taskNumber()}
 
-  }
+  
 }
 </script>
 
@@ -50,6 +57,7 @@ export default {
 <style scoped>
 h3 {
   margin: 40px 0 0;
+  padding: 1rem;
 }
 ul {
   list-style-type: none;
